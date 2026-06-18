@@ -1,20 +1,34 @@
 /**
- * Database module (starter stub).
- *
- * Feature branch: feature/database-connection should implement:
- * - connect()
- * - a config pattern using environment variables
- * - a simple query function OR a client getter
- *
- * You may use:
- * - a "fake" in-memory database for the checkpoint, OR
- * - SQLite, OR
- * - MongoDB/Postgres (optional) — keep setup simple
+ * Database module — feature/database-connection branch.
+ * Implements connect() and getClient() backed by an in-memory client.
+ * Configuration is loaded from environment variables via ./config.
  */
+const { getConfig, validateConfig } = require("./config");
+
+let client = null;
 
 function connect() {
-  // Placeholder: simulate a successful connection
-  return { connected: true, driver: "stub" };
+  if (client) return client;
+  const config = getConfig();
+  validateConfig(config);
+  client = {
+    connected: true,
+    driver: "in-memory",
+    config,
+    connectedAt: new Date().toISOString(),
+  };
+  return client;
 }
 
-module.exports = { connect };
+function getClient() {
+  if (!client) {
+    throw new Error("Database not connected. Call connect() first.");
+  }
+  return client;
+}
+
+function disconnect() {
+  client = null;
+}
+
+module.exports = { connect, getClient, disconnect };

@@ -1,6 +1,6 @@
 # CSP-451 Web Starter — CheckPoint 2
 
-This repository is a **starter template** for practicing (extended on the user-authentication branch):
+This repository is a **starter template** for practicing (extended on the user-authentication and api-endpoints branches):
 - Git branching strategies (GitHub Flow / Git Flow-lite)
 - Pull Requests + review workflow
 - Intentional merge conflicts + manual resolution
